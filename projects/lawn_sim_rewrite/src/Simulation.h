@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SIMULATION_H
+#define SIMULATION_H
+
 #include <iostream>
 #include <string>
 
@@ -21,3 +23,4 @@ private:
 	Map *s_map;
 };
 
+#endif //SIMULATION_H

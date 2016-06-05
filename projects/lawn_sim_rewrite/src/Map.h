@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MAP_H
+#define MAP_H
+
 #include <iostream>
 #include "constants.h"
 
@@ -19,3 +21,4 @@ private:
 	char m_map[constants::MAP_SIZE][constants::MAP_SIZE];
 };
 
+#endif //MAP_H
