@@ -1,13 +1,15 @@
 #include <iostream>
 
-#include "Map.h"
+#include "Simulation.h"
 
 int main()
 {
-	Map *map;
-	map = new Map();
-	map->init();
-	map->printMaps();
+	Simulation *sim = new Simulation();
+	if (sim->init() != 0)
+		printf("Error in simulation initiation");
+	if (sim->run() != 0)
+		printf("Error in simulation run() function");
+
 
 	int k;
 	std::cin >> k;
