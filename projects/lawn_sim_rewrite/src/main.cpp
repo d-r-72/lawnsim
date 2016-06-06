@@ -4,7 +4,10 @@
 
 int main()
 {
+	//create simulation
 	Simulation *sim = new Simulation();
+	
+	//initialize and run simulation
 	if (sim->init() != 0)
 		printf("Error in simulation initiation");
 	if (sim->run() != 0)

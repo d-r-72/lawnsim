@@ -31,7 +31,7 @@ public:
 	std::string getName() { return m_name; }
 	char getSymbol() { return m_symbol; }
 
-	void init(Map &map);
+	void init(Map &map, int cordx, int cordy);
 	void update(Map &map);
 
 private:
