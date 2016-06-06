@@ -16,11 +16,17 @@ public:
 	int init();
 	int run();
 
-	void cleanUp();
 
 private:
+	void simulateWeek();
+	void cleanUp();
+	bool cutGrass();
+	void printStats();
 
 	bool m_done;
+
+	int m_currentWeek;
+	int m_currentDay;
 
 	Player *m_player;
 	Map *m_map;

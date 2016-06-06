@@ -13,7 +13,12 @@ void Player::init(Map &map, int cordx, int cordy)
 void Player::update(Map &map)
 {
 	//move the player
-	move(map);
+	while (!m_doneMowing)
+	{
+		printf("%s", std::string(100, '\n').c_str());
+		map.update();
+		move(map);
+	}
 }
 
 void Player::move(Map &map)
@@ -57,6 +62,7 @@ void Player::move(Map &map)
 		}
 		break;
 	case 5:
+		m_doneMowing = true;
 		break;
 	default:
 		break;
@@ -68,7 +74,7 @@ int Player::getInput()
 	int result;
 	printf("Please enter a movement command W.A.S.D or Q to quit! ");
 	char temp = _getch();
-
+	printf("\n");
 	//change input from a character to a int
 	switch (temp)
 	{

@@ -20,6 +20,7 @@ void Map::init()
 		{
 			m_map[i][j] = '#';
 			m_mapData[i][j] = constants::INITIAL_GRASS_HEIGHT;
+			m_grassHeight += m_mapData[i][j];
 		}
 	}
 }
@@ -67,6 +68,35 @@ void Map::setTile(int x, int y, char symbol)
 {
 	//set the character of a certain tile
 	m_map[y][x] = symbol;
+}
+
+float Map::getAvgTileHeight()
+{
+	float counter = 0;
+
+	for (int i = 0; i < constants::MAP_SIZE; i++)
+	{
+		for (int j = 0; j < constants::MAP_SIZE; j++)
+		{
+			counter += m_mapData[i][j];
+		}
+	}
+	m_grassHeight = counter;
+	counter /= (constants::MAP_SIZE * constants::MAP_SIZE);
+
+	return counter;
+}
+
+void Map::grow(float amount)
+{
+	//increase each tiles height
+	for (int i = 0; i < constants::MAP_SIZE; i++)
+	{
+		for (int j = 0; j < constants::MAP_SIZE; j++)
+		{
+			m_mapData[i][j] += amount;
+		}
+	}
 }
 
 void Map::update()

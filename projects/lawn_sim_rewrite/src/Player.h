@@ -3,6 +3,7 @@
 
 #include <conio.h>
 #include <iostream>
+
 #include "Map.h"
 
 class Player
@@ -13,7 +14,8 @@ public:
 		m_y(y),
 		m_points(points),
 		m_symbol(symbol),
-		m_name(name) {}
+		m_name(name),
+		m_doneMowing(false) {}
 	Player();
 	~Player();
 
@@ -38,6 +40,8 @@ private:
 	void move(Map &map);
 	int getInput();
 	bool goodMove(int dir, Map &map);
+
+	bool m_doneMowing;
 
 	char m_symbol;
 	std::string m_name;
