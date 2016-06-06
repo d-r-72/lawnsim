@@ -13,6 +13,11 @@ public:
 	void init();
 	void printMaps();
 
+	void getTile(int x, int y, char &sym);
+	void setTile(int x, int y, char symbol);
+
+	void update();
+
 private:
 	void printCharMap();
 	void printFloatMap();

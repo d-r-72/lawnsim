@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+#include "Player.h"
 #include "Map.h"
 
 class Simulation
@@ -19,8 +20,10 @@ public:
 
 private:
 
-	bool _done;
-	Map *s_map;
+	bool m_done;
+
+	Player *m_player;
+	Map *m_map;
 };
 
 #endif //SIMULATION_H

@@ -52,3 +52,18 @@ void Map::printMaps()
 	printCharMap();
 	printFloatMap();
 }
+
+void Map::getTile(int x, int y, char &sym)
+{
+	sym = m_map[y][x];
+}
+
+void Map::setTile(int x, int y, char symbol)
+{
+	m_map[y][x] = symbol;
+}
+
+void Map::update()
+{
+	printCharMap();
+}
