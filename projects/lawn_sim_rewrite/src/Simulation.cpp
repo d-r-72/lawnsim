@@ -31,16 +31,18 @@ int Simulation::run()
 	//main loop
 	while (!m_done)
 	{
-		if(m_currentWeek != 7)
-			simulateWeek();
-		
 		printStats();
 		
 		//updates
 		if (cutGrass())
 			m_player->update(*m_map);
 
+		m_map->update();
 
+		if(m_currentWeek != 7)
+			simulateWeek();
+
+		m_currentWeek++;
 	}
 	//delete pointers
 	cleanUp();
@@ -49,9 +51,7 @@ int Simulation::run()
 
 void Simulation::simulateWeek()
 {
-	m_map->grow(0.62f);
-
-	m_currentWeek++;
+	//TODO: simulate growth in week, add weather...
 }
 
 void Simulation::cleanUp()

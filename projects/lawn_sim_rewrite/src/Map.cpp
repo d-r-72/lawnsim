@@ -4,6 +4,7 @@
 
 Map::Map()
 {
+	m_grassHeight = 36.0f;
 }
 
 
@@ -19,8 +20,7 @@ void Map::init()
 		for (int j = 0; j < constants::MAP_SIZE; j++)
 		{
 			m_map[i][j] = '#';
-			m_mapData[i][j] = constants::INITIAL_GRASS_HEIGHT;
-			m_grassHeight += m_mapData[i][j];
+			m_mapData[i][j] = (m_grassHeight) / (float)(constants::MAP_SIZE * constants::MAP_SIZE);
 		}
 	}
 }
@@ -70,21 +70,14 @@ void Map::setTile(int x, int y, char symbol)
 	m_map[y][x] = symbol;
 }
 
+char Map::getTileSymbol(int x, int y)
+{
+	return m_map[y][x];
+}
+
 float Map::getAvgTileHeight()
 {
-	float counter = 0;
-
-	for (int i = 0; i < constants::MAP_SIZE; i++)
-	{
-		for (int j = 0; j < constants::MAP_SIZE; j++)
-		{
-			counter += m_mapData[i][j];
-		}
-	}
-	m_grassHeight = counter;
-	counter /= (constants::MAP_SIZE * constants::MAP_SIZE);
-
-	return counter;
+	return m_grassHeight / (constants::MAP_SIZE * constants::MAP_SIZE);
 }
 
 void Map::grow(float amount)
@@ -99,8 +92,22 @@ void Map::grow(float amount)
 	}
 }
 
+void Map::cutGrassTile(int x, int y, float amount)
+{
+	if(m_mapData[y][x] > amount)
+		m_mapData[y][x] -= amount;
+}
+
 void Map::update()
 {
+	m_grassHeight = 0;
 	//map update function; just prints the character map
-	printCharMap();
+	for (int i = 0; i < constants::MAP_SIZE; i++)
+	{
+		for (int j = 0; j < constants::MAP_SIZE; j++)
+		{
+			m_grassHeight += m_mapData[i][j];
+		}
+	}
+	std::cout << m_grassHeight << '\n';
 }

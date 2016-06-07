@@ -16,9 +16,12 @@ void Player::update(Map &map)
 	while (!m_doneMowing)
 	{
 		printf("%s", std::string(100, '\n').c_str());
-		map.update();
+		if (m_printFloatMap)
+			map.printFloatMap();
+		map.printCharMap();
 		move(map);
 	}
+	m_doneMowing = false;
 }
 
 void Player::move(Map &map)
@@ -35,6 +38,7 @@ void Player::move(Map &map)
 			map.setTile(m_x, m_y - 1, '@');
 			map.setTile(m_x, m_y, '^');
 			setCords(m_x, m_y - 1);
+			map.cutGrassTile(m_x, m_y + 1, 0.5f);
 		}
 		break;
 	case 2:
@@ -43,6 +47,7 @@ void Player::move(Map &map)
 			map.setTile(m_x + 1, m_y, '@');
 			map.setTile(m_x, m_y, '^');
 			setCords(m_x + 1, m_y);
+			map.cutGrassTile(m_x - 1, m_y, 0.5f);
 		}
 		break;
 	case 3:
@@ -51,6 +56,7 @@ void Player::move(Map &map)
 			map.setTile(m_x, m_y + 1, '@');
 			map.setTile(m_x, m_y, '^');
 			setCords(m_x, m_y + 1);
+			map.cutGrassTile(m_x, m_y - 1, 0.5f);
 		}
 		break;
 	case 4:
@@ -59,11 +65,14 @@ void Player::move(Map &map)
 			map.setTile(m_x - 1, m_y, '@');
 			map.setTile(m_x, m_y, '^');
 			setCords(m_x - 1, m_y);
+			map.cutGrassTile(m_x + 1, m_y, 0.5f);
 		}
 		break;
 	case 5:
 		m_doneMowing = true;
 		break;
+	case 6:
+		m_printFloatMap = true;
 	default:
 		break;
 	}
@@ -71,8 +80,8 @@ void Player::move(Map &map)
 
 int Player::getInput()
 {
-	int result;
-	printf("Please enter a movement command W.A.S.D or Q to quit! ");
+	int result = 0;
+	printf("Please enter a movement command W.A.S.D or Q to quit! (6 to print float map): ");
 	char temp = _getch();
 	printf("\n");
 	//change input from a character to a int
@@ -98,12 +107,17 @@ int Player::getInput()
 	case 'Q':
 		result = 5;
 		break;
+	case 't':
+	case 'T':
+		result = 6;
+		break;
 	default:
 		printf("\nIncorrect user input, press any key too exit...");
 		_getch();
 		exit(-1);
 		break;
 	}
+
 	return result;
 }
 

@@ -15,7 +15,8 @@ public:
 		m_points(points),
 		m_symbol(symbol),
 		m_name(name),
-		m_doneMowing(false) {}
+		m_doneMowing(false),
+		m_printFloatMap(false) {}
 	Player();
 	~Player();
 
@@ -41,6 +42,7 @@ private:
 	int getInput();
 	bool goodMove(int dir, Map &map);
 
+	bool m_printFloatMap;
 	bool m_doneMowing;
 
 	char m_symbol;

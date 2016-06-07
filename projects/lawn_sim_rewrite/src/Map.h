@@ -17,15 +17,17 @@ public:
 	void setTile(int x, int y, char symbol);
 	float getTotalHeight() { return m_grassHeight; }
 
+	char getTileSymbol(int x, int y);
 	float getAvgTileHeight();
 
 	void grow(float amount);
+	void cutGrassTile(int x, int y, float amount);
 
 	void update();
+	void printFloatMap();
+	void printCharMap();
 
 private:
-	void printCharMap();
-	void printFloatMap();
 	float m_grassHeight;
 
 	float m_mapData[constants::MAP_SIZE][constants::MAP_SIZE];
