@@ -109,5 +109,4 @@ void Map::update()
 			m_grassHeight += m_mapData[i][j];
 		}
 	}
-	std::cout << m_grassHeight << '\n';
 }

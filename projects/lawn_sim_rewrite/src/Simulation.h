@@ -6,6 +6,7 @@
 
 #include "Player.h"
 #include "Map.h"
+#include "Weather.h"
 
 class Simulation
 {
@@ -24,10 +25,12 @@ private:
 	void printStats();
 
 	bool m_done;
-
+	bool m_weatherStats;
+	
 	int m_currentWeek;
 	int m_currentDay;
 
+	Weather *m_weather;
 	Player *m_player;
 	Map *m_map;
 };

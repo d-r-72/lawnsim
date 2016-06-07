@@ -2,6 +2,12 @@
 
 Simulation::Simulation()
 {
+	printf("Weather stats? ");
+	char in = _getch();
+	if (in == 'y')
+		m_weatherStats = true;
+	else
+		m_weatherStats = false;
 }
 
 
@@ -15,9 +21,10 @@ int Simulation::init()
 	m_currentDay = 1;
 	m_currentWeek = 1;
 
-	//setup map and player
+	//initialize pointers
 	m_map = new Map();
 	m_player = new Player(0, 0, 0.0f, '@', "David");
+	m_weather = new Weather();
 
 	//initialize map and player
 	m_map->init();
@@ -30,18 +37,21 @@ int Simulation::run()
 {
 	//main loop
 	while (!m_done)
-	{
+	{	
+		if(m_currentWeek != 12)
+			simulateWeek();
+
+		m_map->update();
+
+		//usually should go above cutGrass()
 		printStats();
-		
+
 		//updates
 		if (cutGrass())
 			m_player->update(*m_map);
 
-		m_map->update();
 
-		if(m_currentWeek != 7)
-			simulateWeek();
-
+		printf("%s\n", std::string(100, '\n').c_str());
 		m_currentWeek++;
 	}
 	//delete pointers
@@ -51,7 +61,9 @@ int Simulation::run()
 
 void Simulation::simulateWeek()
 {
-	//TODO: simulate growth in week, add weather...
+	m_weather->stats(m_weatherStats);
+	float change = m_weather->rain();
+	m_map->grow(change);
 }
 
 void Simulation::cleanUp()
@@ -64,7 +76,7 @@ bool Simulation::cutGrass()
 {
 	bool result = false;
 
-	printf("The average tile of grass height is: %f\n", m_map->getAvgTileHeight());
+	printf("The average tile of grass height is: %.3f\n", m_map->getAvgTileHeight());
 	printf("Would you like to mow? (y,n)");
 	char answer;
 	answer = _getch();
@@ -79,10 +91,9 @@ bool Simulation::cutGrass()
 
 void Simulation::printStats()
 {
-	printf("Current day: %d\n", m_currentDay);
-	printf("Current week: %d\n", m_currentWeek);
-	printf("Total grass height: %f\n", m_map->getTotalHeight());
-	printf("Player points: %f\n", m_player->getPoints());
+	printf("Day | Week : %d | %d\n", m_currentDay, m_currentWeek);
+	printf("Total grass height: %.3f\n", m_map->getTotalHeight());
+	printf("Player points: %.3f\n", m_player->getPoints());
 	printf("Player name: %s\n", m_player->getName().c_str());
 	printf("Player symbol: %c\n", m_player->getSymbol());
 }

@@ -31,3 +31,7 @@ fixed:
 
 -map updating
 -completed dual map w/ mowing
+-rain
+
+TODO:
+-implement days
