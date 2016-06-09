@@ -101,7 +101,7 @@ void Map::cutGrassTile(int x, int y, float amount)
 void Map::update()
 {
 	m_grassHeight = 0;
-	//map update function; just prints the character map
+	//map update function
 	for (int i = 0; i < constants::MAP_SIZE; i++)
 	{
 		for (int j = 0; j < constants::MAP_SIZE; j++)
@@ -109,4 +109,23 @@ void Map::update()
 			m_grassHeight += m_mapData[i][j];
 		}
 	}
+}
+
+void Map::reGrowth()
+{
+	for (int i = 0; i < constants::MAP_SIZE; i++)
+	{
+		for (int j = 0; j < constants::MAP_SIZE; j++)
+		{
+			if(m_mapData[i][j] >= 1.0f)
+			{
+				m_map[i][j] = '#';
+			}
+		}
+	}
+}
+
+void Map::setPlayer(int x, int y)
+{
+	m_map[y][x] = '@';
 }

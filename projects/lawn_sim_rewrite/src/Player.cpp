@@ -12,6 +12,8 @@ void Player::init(Map &map, int cordx, int cordy)
 
 void Player::update(Map &map)
 {
+	map.reGrowth();
+	map.setPlayer(getX(), getY());
 	//move the player
 	while (!m_doneMowing)
 	{
@@ -20,6 +22,7 @@ void Player::update(Map &map)
 			map.printFloatMap();
 		map.printCharMap();
 		move(map);
+		map.update();
 	}
 	m_doneMowing = false;
 }

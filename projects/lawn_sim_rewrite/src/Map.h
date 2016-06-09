@@ -23,6 +23,8 @@ public:
 	void grow(float amount);
 	void cutGrassTile(int x, int y, float amount);
 
+	void setPlayer(int x, int y);
+	void reGrowth();
 	void update();
 	void printFloatMap();
 	void printCharMap();
