@@ -20,13 +20,14 @@ public:
 
 private:
 	void simulateWeek();
+	void simulateDay();
 	void cleanUp();
 	bool cutGrass();
 	void printStats();
 
 	bool m_done;
 	bool m_weatherStats;
-	
+
 	int m_currentWeek;
 	int m_currentDay;
 

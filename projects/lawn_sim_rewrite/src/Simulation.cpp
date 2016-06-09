@@ -33,11 +33,16 @@ int Simulation::init()
 	return 0;
 }
 
+void Simulation::simulateDay()
+{
+
+}
+
 int Simulation::run()
 {
 	//main loop
 	while (!m_done)
-	{	
+	{
 		if(m_currentWeek != 12)
 			simulateWeek();
 
@@ -61,9 +66,15 @@ int Simulation::run()
 
 void Simulation::simulateWeek()
 {
+	/*
 	m_weather->stats(m_weatherStats);
 	float change = m_weather->rain();
 	m_map->grow(change);
+	*/
+	for (int i =0; i < 7; i++)
+	{
+		simulateDay();
+	}
 }
 
 void Simulation::cleanUp()

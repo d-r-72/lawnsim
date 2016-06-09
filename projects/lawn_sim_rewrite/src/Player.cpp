@@ -6,7 +6,7 @@ Player::~Player() {}
 
 void Player::init(Map &map, int cordx, int cordy)
 {
-	//set the player to a certain defined tile
+	//set the player to a certain defined
 	map.setTile(cordx, cordy, '@');
 }
 

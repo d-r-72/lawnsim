@@ -35,3 +35,7 @@ fixed:
 
 TODO:
 -implement days
+-implement lawn mower fuel
+-points
+-colors
+-other weather stuff
