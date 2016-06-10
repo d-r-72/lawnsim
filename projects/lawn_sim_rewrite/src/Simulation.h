@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Weather.h"
+#include "Color.h"
 
 class Simulation
 {
@@ -31,6 +32,7 @@ private:
 	int m_currentWeek;
 	int m_currentDay;
 
+	Color *m_color;
 	Weather *m_weather;
 	Player *m_player;
 	Map *m_map;

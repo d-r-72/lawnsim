@@ -32,10 +32,10 @@ fixed:
 -map updating
 -completed dual map w/ mowing
 -rain
+-implement lawn mower fuel
+-colors
+-points
 
 TODO:
--implement days
--implement lawn mower fuel
--points
--colors
+-implement days ****
 -other weather stuff

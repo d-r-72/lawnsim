@@ -24,10 +24,11 @@ float Weather::rain()
 
 	if(m_printStats)
 	{
+		printf("\n----------WEATHER STATS----------\n");
 		printf("Startday: %d\nDuration: %d\nMax Duration: %d\n", startDay, duration, 7 - startDay);
+		printf("---------------------------------\n\n");
 	}
 
-	printf("Total grass height growth: %.3f\n", result * constants::MAP_AREA);
 	return result;
 }
 

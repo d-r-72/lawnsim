@@ -21,8 +21,15 @@ void Player::update(Map &map)
 		if (m_printFloatMap)
 			map.printFloatMap();
 		map.printCharMap();
+		printf("Mower Fuel: %f\n", m_mowerFuel);
 		move(map);
 		map.update();
+		if ((m_mowerFuel - .2) < 0.0f)
+		{
+			printf("No Mower Fuel!\n");
+			Sleep(2000);
+			break;
+		}
 	}
 	m_doneMowing = false;
 }
@@ -39,36 +46,52 @@ void Player::move(Map &map)
 			then set the current tile to the 'cut' 
 			character then set the players cords*/
 			map.setTile(m_x, m_y - 1, '@');
-			map.setTile(m_x, m_y, '^');
+			if((map.getTileHeight(m_x, m_y) - .5f) > 0.5f)
+				map.setTile(m_x, m_y, '#');
+			else
+				map.setTile(m_x, m_y, '^');
 			setCords(m_x, m_y - 1);
 			map.cutGrassTile(m_x, m_y + 1, 0.5f);
+			m_mowerFuel -= 0.2f;
 		}
 		break;
 	case 2:
 		if (goodMove(dir, map))
 		{
 			map.setTile(m_x + 1, m_y, '@');
-			map.setTile(m_x, m_y, '^');
+			if ((map.getTileHeight(m_x, m_y) - .5f) > 0.5f)
+				map.setTile(m_x, m_y, '#');
+			else
+				map.setTile(m_x, m_y, '>');
 			setCords(m_x + 1, m_y);
 			map.cutGrassTile(m_x - 1, m_y, 0.5f);
+			m_mowerFuel -= 0.2f;
 		}
 		break;
 	case 3:
 		if (goodMove(dir, map))
 		{
 			map.setTile(m_x, m_y + 1, '@');
-			map.setTile(m_x, m_y, '^');
+			if ((map.getTileHeight(m_x, m_y) - .5f) > 0.5f)
+				map.setTile(m_x, m_y, '#');
+			else
+				map.setTile(m_x, m_y, '^');
 			setCords(m_x, m_y + 1);
 			map.cutGrassTile(m_x, m_y - 1, 0.5f);
+			m_mowerFuel -= 0.2f;
 		}
 		break;
 	case 4:
 		if (goodMove(dir, map))
 		{
 			map.setTile(m_x - 1, m_y, '@');
-			map.setTile(m_x, m_y, '^');
+			if ((map.getTileHeight(m_x, m_y) - .5f) > 0.5f)
+				map.setTile(m_x, m_y, '#');
+			else
+				map.setTile(m_x, m_y, '<');
 			setCords(m_x - 1, m_y);
 			map.cutGrassTile(m_x + 1, m_y, 0.5f);
+			m_mowerFuel -= 0.2f;
 		}
 		break;
 	case 5:
@@ -141,6 +164,10 @@ bool Player::goodMove(int dir, Map &map)
 	if (temp == '#')
 		result = true;
 	if (temp == '^')
+		result = true;
+	if (temp == '>')
+		result = true;
+	if (temp == '<')
 		result = true;
 
 	return result;

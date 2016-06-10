@@ -5,11 +5,13 @@
 Map::Map()
 {
 	m_grassHeight = 36.0f;
+	m_color = new Color();
 }
 
 
 Map::~Map()
 {
+	delete m_color;
 }
 
 void Map::init()
@@ -32,9 +34,25 @@ void Map::printCharMap()
 	{
 		for (int j = 0; j < constants::MAP_SIZE; j++)
 		{
-			printf("  %c  ", m_map[i][j]);
+			if (m_map[i][j] == '@')
+			{
+				m_color->setColorWhite();
+				printf("  %c  ", m_map[i][j]);
+			}
+			else if ((m_map[i][j] == '^') || (m_map[i][j] == '<') || (m_map[i][j] == '>'))
+			{
+				m_color->setColorDarkGreen();
+				printf("  %c  ", m_map[i][j]);
+				m_color->setColorWhite();
+			}
+			else if (m_map[i][j] == '#')
+			{
+				m_color->setColorGreen();
+				printf("  %c  ", m_map[i][j]);
+				m_color->setColorWhite();
+			}
 		}
-		printf("\n");
+		printf("\n\n");
 	}
 }
 
@@ -45,9 +63,16 @@ void Map::printFloatMap()
 	{
 		for (int j = 0; j < constants::MAP_SIZE; j++)
 		{
-			printf("  %.3f  ", m_mapData[i][j]);
+			if (m_map[i][j] == '@')
+			{
+				m_color->setColorBlue();
+				printf(" %.1f ", m_mapData[i][j]);
+				m_color->setColorWhite();
+			}
+			else
+				printf(" %.1f ", m_mapData[i][j]);
 		}
-		printf("\n");
+		printf("\n\n");
 	}
 }
 
@@ -78,6 +103,11 @@ char Map::getTileSymbol(int x, int y)
 float Map::getAvgTileHeight()
 {
 	return m_grassHeight / (constants::MAP_SIZE * constants::MAP_SIZE);
+}
+
+float Map::getTileHeight(int x, int y)
+{
+	return m_mapData[y][x];
 }
 
 void Map::grow(float amount)

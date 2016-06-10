@@ -2,8 +2,10 @@
 
 Simulation::Simulation()
 {
+	m_color->setColorWhite();
 	printf("Weather stats? ");
 	char in = _getch();
+	printf("\n");
 	if (in == 'y')
 		m_weatherStats = true;
 	else
@@ -25,6 +27,7 @@ int Simulation::init()
 	m_map = new Map();
 	m_player = new Player(0, 0, 0.0f, '@', "David");
 	m_weather = new Weather();
+	m_color = new Color();
 
 	//initialize map and player
 	m_map->init();
@@ -40,9 +43,14 @@ void Simulation::simulateDay()
 
 int Simulation::run()
 {
+	int dayCount = 1;
 	//main loop
 	while (!m_done)
 	{
+		m_color->setColorRed();
+		printf("Day | Week : %d | %d\n", m_currentDay, m_currentWeek);
+		m_color->setColorWhite();
+
 		if(m_currentWeek != 12)
 			simulateWeek();
 
@@ -54,8 +62,14 @@ int Simulation::run()
 		//updates
 		if (cutGrass())
 			m_player->update(*m_map);
+		else
+			dayCount++;
+
+		if (dayCount == 3)
+			m_player->setFuelLevel(2.0f), dayCount = 0;
 
 
+		Sleep(2000);
 		printf("%s\n", std::string(100, '\n').c_str());
 		m_currentWeek++;
 	}
@@ -66,12 +80,12 @@ int Simulation::run()
 
 void Simulation::simulateWeek()
 {
-	/*
+	
 	m_weather->stats(m_weatherStats);
 	float change = m_weather->rain();
 	m_map->grow(change);
-	*/
-	for (int i =0; i < 7; i++)
+	
+	for (int i = 0; i < 7; i++)
 	{
 		simulateDay();
 	}
@@ -79,6 +93,7 @@ void Simulation::simulateWeek()
 
 void Simulation::cleanUp()
 {
+	delete m_color;
 	delete m_map;
 	delete m_player;
 }
@@ -87,7 +102,7 @@ bool Simulation::cutGrass()
 {
 	bool result = false;
 
-	printf("The average tile of grass height is: %.3f\n", m_map->getAvgTileHeight());
+	m_map->printFloatMap();
 	printf("Would you like to mow? (y,n)");
 	char answer;
 	answer = _getch();
@@ -96,15 +111,27 @@ bool Simulation::cutGrass()
 	if (answer == 'Y')
 		result = true;
 
+	if (m_player->getFuelLevel() < 0.2f)
+	{
+		result = false;
+		printf("\nNot enough fuel!");
+	}
+
 	printf("\n");
 	return result;
 }
 
 void Simulation::printStats()
 {
-	printf("Day | Week : %d | %d\n", m_currentDay, m_currentWeek);
-	printf("Total grass height: %.3f\n", m_map->getTotalHeight());
+	printf("\n----------PLAYER STATS----------\n");
 	printf("Player points: %.3f\n", m_player->getPoints());
 	printf("Player name: %s\n", m_player->getName().c_str());
 	printf("Player symbol: %c\n", m_player->getSymbol());
+	printf("Mower fuel level: %.3f\n", m_player->getFuelLevel());
+	printf("--------------------------------\n\n");
+
+	printf("\n----------MAP STATS----------\n");
+	printf("Map grass height: %.3f\n", m_map->getTotalHeight());
+	printf("-----------------------------\n\n");
+	//printf("Total grass height: %.3f\n", m_map->getTotalHeight());
 }

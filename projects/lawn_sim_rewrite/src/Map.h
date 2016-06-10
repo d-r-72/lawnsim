@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "constants.h"
+#include "Color.h"
 
 class Map
 {
@@ -19,6 +20,7 @@ public:
 
 	char getTileSymbol(int x, int y);
 	float getAvgTileHeight();
+	float getTileHeight(int x, int y);
 
 	void grow(float amount);
 	void cutGrassTile(int x, int y, float amount);
@@ -32,6 +34,8 @@ public:
 private:
 	float m_grassHeight;
 
+
+	Color *m_color;
 	float m_mapData[constants::MAP_SIZE][constants::MAP_SIZE];
 	char m_map[constants::MAP_SIZE][constants::MAP_SIZE];
 };
